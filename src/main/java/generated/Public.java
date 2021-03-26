@@ -4,6 +4,7 @@
 package generated;
 
 
+import generated.tables.Redirect;
 import generated.tables.Url;
 import org.jooq.Catalog;
 import org.jooq.Sequence;
@@ -29,12 +30,17 @@ import java.util.List;
 @SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class Public extends SchemaImpl {
 
-    private static final long serialVersionUID = 302403740;
+    private static final long serialVersionUID = -937124150;
 
     /**
      * The reference instance of <code>public</code>
      */
     public static final Public PUBLIC = new Public();
+
+    /**
+     * The table <code>public.redirect</code>.
+     */
+    public final Redirect REDIRECT = Redirect.REDIRECT;
 
     /**
      * The table <code>public.url</code>.
@@ -66,6 +72,7 @@ public class Public extends SchemaImpl {
 
     private final List<Sequence<?>> getSequences0() {
         return Arrays.<Sequence<?>>asList(
+            Sequences.SEQ_REDIRECT_ID,
             Sequences.SEQ_URL_ID);
     }
 
@@ -78,6 +85,7 @@ public class Public extends SchemaImpl {
 
     private final List<Table<?>> getTables0() {
         return Arrays.<Table<?>>asList(
+            Redirect.REDIRECT,
             Url.URL);
     }
 }

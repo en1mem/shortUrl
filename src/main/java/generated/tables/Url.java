@@ -29,7 +29,7 @@ import java.util.List;
 @SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class Url extends TableImpl<UrlRecord> {
 
-    private static final long serialVersionUID = 1592667485;
+    private static final long serialVersionUID = -1194281371;
 
     /**
      * The reference instance of <code>public.url</code>
@@ -48,11 +48,6 @@ public class Url extends TableImpl<UrlRecord> {
      * The column <code>public.url.id</code>.
      */
     public final TableField<UrlRecord, Long> ID = createField("id", org.jooq.impl.SQLDataType.BIGINT.nullable(false).defaultValue(org.jooq.impl.DSL.field("nextval('seq_url_id'::regclass)", org.jooq.impl.SQLDataType.BIGINT)), this, "");
-
-    /**
-     * The column <code>public.url.redirects</code>.
-     */
-    public final TableField<UrlRecord, Long> REDIRECTS = createField("redirects", org.jooq.impl.SQLDataType.BIGINT.nullable(false).defaultValue(org.jooq.impl.DSL.field("0", org.jooq.impl.SQLDataType.BIGINT)), this, "");
 
     /**
      * The column <code>public.url.full_url</code>.

@@ -68,13 +68,6 @@ public class UrlDao extends DAOImpl<UrlRecord, generated.tables.pojos.Url, Long>
     }
 
     /**
-     * Fetch records that have <code>redirects IN (values)</code>
-     */
-    public List<generated.tables.pojos.Url> fetchByRedirects(Long... values) {
-        return fetch(Url.URL.REDIRECTS, values);
-    }
-
-    /**
      * Fetch records that have <code>full_url IN (values)</code>
      */
     public List<generated.tables.pojos.Url> fetchByFullUrl(String... values) {

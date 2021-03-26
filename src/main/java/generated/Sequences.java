@@ -24,6 +24,11 @@ import javax.annotation.Generated;
 public class Sequences {
 
     /**
+     * The sequence <code>public.seq_redirect_id</code>
+     */
+    public static final Sequence<Long> SEQ_REDIRECT_ID = new SequenceImpl<Long>("seq_redirect_id", Public.PUBLIC, org.jooq.impl.SQLDataType.BIGINT.nullable(false));
+
+    /**
      * The sequence <code>public.seq_url_id</code>
      */
     public static final Sequence<Long> SEQ_URL_ID = new SequenceImpl<Long>("seq_url_id", Public.PUBLIC, org.jooq.impl.SQLDataType.BIGINT.nullable(false));

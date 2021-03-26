@@ -4,6 +4,7 @@
 package generated;
 
 
+import generated.tables.Redirect;
 import generated.tables.Url;
 
 import javax.annotation.Generated;
@@ -21,6 +22,11 @@ import javax.annotation.Generated;
 )
 @SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class Tables {
+
+    /**
+     * The table <code>public.redirect</code>.
+     */
+    public static final Redirect REDIRECT = Redirect.REDIRECT;
 
     /**
      * The table <code>public.url</code>.

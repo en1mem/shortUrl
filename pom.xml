@@ -99,7 +99,7 @@
                         <configuration>
                             <jdbc>
                                 <driver>org.postgresql.Driver</driver>
-                                <urlPojo>jdbc:postgresql://${host}:${port}/${db}</urlPojo>
+                                <url>jdbc:postgresql://${host}:${port}/${db}</url>
                                 <username>${login}</username>
                                 <password>${password}</password>
                             </jdbc>

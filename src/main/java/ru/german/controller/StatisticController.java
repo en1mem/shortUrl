@@ -4,6 +4,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
+import ru.german.model.GroupedStatisticPojo;
+import ru.german.model.UrlPojo;
 import ru.german.service.StatisticService;
 
 import java.util.List;
@@ -24,12 +26,12 @@ public class StatisticController {
     }
 
     @RequestMapping(value = "/get/top20", method = GET)
-    public ResponseEntity<List<String>> getTop20FullUrls() {
+    public ResponseEntity<List<UrlPojo>> getTop20FullUrls() {
         return statisticService.getTop20FullUrls();
     }
-//todo
-//    @RequestMapping(value = "/get/statistic", method = POST)
-//    public ResponseEntity<Object> getGroupedStatistic() {
-//        return statisticService.getGroupedStatistic();
-//    }
+
+    @RequestMapping(value = "/get/statistic", method = POST)
+    public ResponseEntity<GroupedStatisticPojo> getGroupedStatisticByDetailedTime(String shortUrl) {
+        return statisticService.getGroupedStatisticByDetailedTime(shortUrl);
+    }
 }

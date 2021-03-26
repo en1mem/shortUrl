@@ -4,7 +4,9 @@
 package generated;
 
 
+import generated.tables.Redirect;
 import generated.tables.Url;
+import generated.tables.records.RedirectRecord;
 import generated.tables.records.UrlRecord;
 import org.jooq.Identity;
 import org.jooq.UniqueKey;
@@ -31,12 +33,14 @@ public class Keys {
     // IDENTITY definitions
     // -------------------------------------------------------------------------
 
+    public static final Identity<RedirectRecord, Long> IDENTITY_REDIRECT = Identities0.IDENTITY_REDIRECT;
     public static final Identity<UrlRecord, Long> IDENTITY_URL = Identities0.IDENTITY_URL;
 
     // -------------------------------------------------------------------------
     // UNIQUE and PRIMARY KEY definitions
     // -------------------------------------------------------------------------
 
+    public static final UniqueKey<RedirectRecord> REDIRECT_PKEY = UniqueKeys0.REDIRECT_PKEY;
     public static final UniqueKey<UrlRecord> URL_PKEY = UniqueKeys0.URL_PKEY;
 
     // -------------------------------------------------------------------------
@@ -49,10 +53,12 @@ public class Keys {
     // -------------------------------------------------------------------------
 
     private static class Identities0 extends AbstractKeys {
+        public static Identity<RedirectRecord, Long> IDENTITY_REDIRECT = createIdentity(Redirect.REDIRECT, Redirect.REDIRECT.ID);
         public static Identity<UrlRecord, Long> IDENTITY_URL = createIdentity(Url.URL, Url.URL.ID);
     }
 
     private static class UniqueKeys0 extends AbstractKeys {
+        public static final UniqueKey<RedirectRecord> REDIRECT_PKEY = createUniqueKey(Redirect.REDIRECT, "redirect_pkey", Redirect.REDIRECT.ID);
         public static final UniqueKey<UrlRecord> URL_PKEY = createUniqueKey(Url.URL, "url_pkey", Url.URL.ID);
     }
 }

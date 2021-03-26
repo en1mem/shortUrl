@@ -13,14 +13,26 @@ public class RewriteService {
     @Autowired
     UrlRepository repository;
 
-    public ResponseEntity<String> createShortUrl(String fullUrl) {
-        Long id = repository.getNextValueForUrl();
-        UrlPojo urlPojo = new UrlPojo(id, fullUrl);
+    @Autowired
+    RedirectService redirectService;
 
-        Url result = mapPojo(urlPojo);
-        repository.insert(result);
+    public ResponseEntity<String> getShortUrl(String fullUrl) {
+        String shortUrl = repository.getShortUrl(fullUrl);
 
-        return ResponseEntity.ok(result.getShortUrl());
+        if (shortUrl != null) {
+            //todo refactor
+            Long urlId = repository.getIdByShortUrl(shortUrl);
+            repository.redirectCounter(urlId);
+        } else {
+            Long id = repository.getNextValueForUrl();
+            UrlPojo urlPojo = new UrlPojo(id, fullUrl);
+
+            Url result = mapPojo(urlPojo);
+            shortUrl = result.getShortUrl();
+            repository.insert(result);
+        }
+
+        return ResponseEntity.ok(shortUrl);
     }
 
     private Url mapPojo(UrlPojo urlPojo) {
