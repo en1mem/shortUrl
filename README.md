@@ -24,6 +24,8 @@ CREATE TABLE url (
               id bigint primary key,
               full_url text NOT NULL,
               short_url text NOT NULL,
+              source_name text NOT NULL, 
+              redirect_count bigint DEFAULT 1,
 	      created_date_time timestamp NOT NULL DEFAULT now()
 );
 
@@ -33,7 +35,6 @@ alter table url alter column id set default nextval('seq_url_id');
 
 CREATE TABLE redirect (
               id bigint primary key,
-              redirect_count bigint DEFAULT 0,
               url_id bigint NOT NULL,
 	      created_date_time timestamp NOT NULL DEFAULT now()
 );

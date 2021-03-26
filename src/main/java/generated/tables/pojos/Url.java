@@ -23,12 +23,14 @@ import java.sql.Timestamp;
 @SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class Url implements Serializable {
 
-    private static final long serialVersionUID = 399471575;
+    private static final long serialVersionUID = 633470004;
 
     private Long      id;
     private String    fullUrl;
     private String    shortUrl;
     private Timestamp createdDateTime;
+    private Long      redirectCount;
+    private String    sourceName;
 
     public Url() {}
 
@@ -37,18 +39,24 @@ public class Url implements Serializable {
         this.fullUrl = value.fullUrl;
         this.shortUrl = value.shortUrl;
         this.createdDateTime = value.createdDateTime;
+        this.redirectCount = value.redirectCount;
+        this.sourceName = value.sourceName;
     }
 
     public Url(
         Long      id,
         String    fullUrl,
         String    shortUrl,
-        Timestamp createdDateTime
+        Timestamp createdDateTime,
+        Long      redirectCount,
+        String    sourceName
     ) {
         this.id = id;
         this.fullUrl = fullUrl;
         this.shortUrl = shortUrl;
         this.createdDateTime = createdDateTime;
+        this.redirectCount = redirectCount;
+        this.sourceName = sourceName;
     }
 
     public Long getId() {
@@ -85,6 +93,23 @@ public class Url implements Serializable {
         this.createdDateTime = createdDateTime;
     }
 
+    public Long getRedirectCount() {
+        return this.redirectCount;
+    }
+
+    public void setRedirectCount(Long redirectCount) {
+        this.redirectCount = redirectCount;
+    }
+
+    @NotNull
+    public String getSourceName() {
+        return this.sourceName;
+    }
+
+    public void setSourceName(String sourceName) {
+        this.sourceName = sourceName;
+    }
+
     @Override
     public String toString() {
         StringBuilder sb = new StringBuilder("Url (");
@@ -93,6 +118,8 @@ public class Url implements Serializable {
         sb.append(", ").append(fullUrl);
         sb.append(", ").append(shortUrl);
         sb.append(", ").append(createdDateTime);
+        sb.append(", ").append(redirectCount);
+        sb.append(", ").append(sourceName);
 
         sb.append(")");
         return sb.toString();

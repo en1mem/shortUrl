@@ -21,6 +21,7 @@ public class StatisticService {
     }
 
     public ResponseEntity<List<UrlPojo>> getTop20FullUrls() {
+        //todo fix
         return repository.getTopUrls(20);
     }
 
@@ -29,7 +30,7 @@ public class StatisticService {
         GroupedStatisticPojo groupedStatisticPojo = new GroupedStatisticPojo();
 
         Long urlId = repository.getIdByShortUrl(shortUrl);
-        Redirect redirect = repository.getRedirectByUrlId(urlId);
+        List<Redirect> redirects = repository.getRedirectListByUrlId(urlId);
 
         return ResponseEntity.ok(groupedStatisticPojo);
 

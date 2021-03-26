@@ -68,13 +68,6 @@ public class RedirectDao extends DAOImpl<RedirectRecord, generated.tables.pojos.
     }
 
     /**
-     * Fetch records that have <code>redirect_count IN (values)</code>
-     */
-    public List<generated.tables.pojos.Redirect> fetchByRedirectCount(Long... values) {
-        return fetch(Redirect.REDIRECT.REDIRECT_COUNT, values);
-    }
-
-    /**
      * Fetch records that have <code>url_id IN (values)</code>
      */
     public List<generated.tables.pojos.Redirect> fetchByUrlId(Long... values) {

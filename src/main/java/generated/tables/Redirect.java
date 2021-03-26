@@ -29,7 +29,7 @@ import java.util.List;
 @SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class Redirect extends TableImpl<RedirectRecord> {
 
-    private static final long serialVersionUID = 427960377;
+    private static final long serialVersionUID = -1890850864;
 
     /**
      * The reference instance of <code>public.redirect</code>
@@ -48,11 +48,6 @@ public class Redirect extends TableImpl<RedirectRecord> {
      * The column <code>public.redirect.id</code>.
      */
     public final TableField<RedirectRecord, Long> ID = createField("id", org.jooq.impl.SQLDataType.BIGINT.nullable(false).defaultValue(org.jooq.impl.DSL.field("nextval('seq_redirect_id'::regclass)", org.jooq.impl.SQLDataType.BIGINT)), this, "");
-
-    /**
-     * The column <code>public.redirect.redirect_count</code>.
-     */
-    public final TableField<RedirectRecord, Long> REDIRECT_COUNT = createField("redirect_count", org.jooq.impl.SQLDataType.BIGINT.nullable(false).defaultValue(org.jooq.impl.DSL.field("0", org.jooq.impl.SQLDataType.BIGINT)), this, "");
 
     /**
      * The column <code>public.redirect.url_id</code>.

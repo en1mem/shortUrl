@@ -22,10 +22,9 @@ import java.sql.Timestamp;
 @SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class Redirect implements Serializable {
 
-    private static final long serialVersionUID = 98116402;
+    private static final long serialVersionUID = 1328240517;
 
     private Long      id;
-    private Long      redirectCount;
     private Long      urlId;
     private Timestamp createdDateTime;
 
@@ -33,19 +32,16 @@ public class Redirect implements Serializable {
 
     public Redirect(Redirect value) {
         this.id = value.id;
-        this.redirectCount = value.redirectCount;
         this.urlId = value.urlId;
         this.createdDateTime = value.createdDateTime;
     }
 
     public Redirect(
         Long      id,
-        Long      redirectCount,
         Long      urlId,
         Timestamp createdDateTime
     ) {
         this.id = id;
-        this.redirectCount = redirectCount;
         this.urlId = urlId;
         this.createdDateTime = createdDateTime;
     }
@@ -56,14 +52,6 @@ public class Redirect implements Serializable {
 
     public void setId(Long id) {
         this.id = id;
-    }
-
-    public Long getRedirectCount() {
-        return this.redirectCount;
-    }
-
-    public void setRedirectCount(Long redirectCount) {
-        this.redirectCount = redirectCount;
     }
 
     public Long getUrlId() {
@@ -87,7 +75,6 @@ public class Redirect implements Serializable {
         StringBuilder sb = new StringBuilder("Redirect (");
 
         sb.append(id);
-        sb.append(", ").append(redirectCount);
         sb.append(", ").append(urlId);
         sb.append(", ").append(createdDateTime);
 

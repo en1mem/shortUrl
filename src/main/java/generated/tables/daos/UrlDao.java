@@ -87,4 +87,18 @@ public class UrlDao extends DAOImpl<UrlRecord, generated.tables.pojos.Url, Long>
     public List<generated.tables.pojos.Url> fetchByCreatedDateTime(Timestamp... values) {
         return fetch(Url.URL.CREATED_DATE_TIME, values);
     }
+
+    /**
+     * Fetch records that have <code>redirect_count IN (values)</code>
+     */
+    public List<generated.tables.pojos.Url> fetchByRedirectCount(Long... values) {
+        return fetch(Url.URL.REDIRECT_COUNT, values);
+    }
+
+    /**
+     * Fetch records that have <code>source_name IN (values)</code>
+     */
+    public List<generated.tables.pojos.Url> fetchBySourceName(String... values) {
+        return fetch(Url.URL.SOURCE_NAME, values);
+    }
 }

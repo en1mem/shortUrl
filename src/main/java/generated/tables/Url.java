@@ -29,7 +29,7 @@ import java.util.List;
 @SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class Url extends TableImpl<UrlRecord> {
 
-    private static final long serialVersionUID = -1194281371;
+    private static final long serialVersionUID = 1055099662;
 
     /**
      * The reference instance of <code>public.url</code>
@@ -63,6 +63,16 @@ public class Url extends TableImpl<UrlRecord> {
      * The column <code>public.url.created_date_time</code>.
      */
     public final TableField<UrlRecord, Timestamp> CREATED_DATE_TIME = createField("created_date_time", org.jooq.impl.SQLDataType.TIMESTAMP.nullable(false).defaultValue(org.jooq.impl.DSL.field("now()", org.jooq.impl.SQLDataType.TIMESTAMP)), this, "");
+
+    /**
+     * The column <code>public.url.redirect_count</code>.
+     */
+    public final TableField<UrlRecord, Long> REDIRECT_COUNT = createField("redirect_count", org.jooq.impl.SQLDataType.BIGINT.defaultValue(org.jooq.impl.DSL.field("1", org.jooq.impl.SQLDataType.BIGINT)), this, "");
+
+    /**
+     * The column <code>public.url.source_name</code>.
+     */
+    public final TableField<UrlRecord, String> SOURCE_NAME = createField("source_name", org.jooq.impl.SQLDataType.CLOB.nullable(false), this, "");
 
     /**
      * Create a <code>public.url</code> table reference
