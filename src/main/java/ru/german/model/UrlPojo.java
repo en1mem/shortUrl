@@ -5,9 +5,6 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 import ru.german.utils.Base62;
 
-import java.net.MalformedURLException;
-import java.net.URL;
-
 @Getter
 @Setter
 @NoArgsConstructor
@@ -17,23 +14,10 @@ public class UrlPojo {
     String shortUrl;
     Long redirectCount;
 
-    public UrlPojo(Long id, String fullUrl) {
+    public UrlPojo(Long id, String fullUrl, String currentHost) {
         this.fullUrl = fullUrl;
         this.redirectCount = 1L;
-        try {
-            URL url = new URL(fullUrl);
-            String protocol = url.getProtocol();
-            String host = url.getHost();
-            int port = url.getPort();
 
-            if (port == -1) {
-                this.shortUrl = String.format("%s://%s", protocol, host) + "/" + Base62.convertToBase62(id);
-            } else {
-                this.shortUrl = String.format("%s://%s:%d", protocol, host, port) + "/" + Base62.convertToBase62(id);
-            }
-        } catch (MalformedURLException e) {
-            e.printStackTrace();
-        }
-
+        this.shortUrl = currentHost + "/redirect/" + Base62.convertToBase62(id);
     }
 }

@@ -4,6 +4,7 @@ import generated.tables.pojos.Url;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import ru.german.model.GroupedStatisticPojo;
 import ru.german.model.TopUrlResponse;
@@ -21,6 +22,11 @@ public class StatisticController {
 
     @Autowired
     StatisticService statisticService;
+
+    @RequestMapping(value = "/get/info", method = POST)
+    public ResponseEntity<UrlPojo> getInfo(@RequestBody String shortUrl) {
+        return statisticService.getInfo(shortUrl);
+    }
 
     @RequestMapping(value = "/getAll", method = POST)
     public ResponseEntity<List<String>> getAllExistedShortUrls() {

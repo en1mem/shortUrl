@@ -18,6 +18,10 @@ public class StatisticService {
     @Autowired
     UrlRepository repository;
 
+    public ResponseEntity<UrlPojo> getInfo(String shortUrl) {
+        return repository.getUrlByBase62Key(shortUrl);
+    }
+
     public ResponseEntity<List<String>> getAllExistedShortUrls() {
         return repository.getAllExistedShortUrls();
     }

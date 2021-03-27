@@ -3,6 +3,7 @@ package ru.german.service;
 import generated.tables.pojos.Redirect;
 import generated.tables.pojos.Url;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -14,7 +15,7 @@ import java.net.URI;
 import java.net.URISyntaxException;
 
 @Service
-public class RewriteService {
+public class UrlService {
 
     @Autowired
     UrlRepository repository;
@@ -24,6 +25,9 @@ public class RewriteService {
 
     @Autowired
     RedirectService redirectService;
+
+    @Value("${currentHost}")
+    String currentHost;
 
     @Transactional
     public ResponseEntity<String> getShortUrl(String fullUrl) {
@@ -35,7 +39,7 @@ public class RewriteService {
             repository.redirectCounter(urlId);
         } else {
             urlId = repository.getNextValueForUrl();
-            UrlPojo urlPojo = new UrlPojo(urlId, fullUrl);
+            UrlPojo urlPojo = new UrlPojo(urlId, fullUrl, currentHost);
 
             Url result = mapPojo(urlPojo);
             shortUrl = result.getShortUrl();
@@ -75,9 +79,5 @@ public class RewriteService {
     public ResponseEntity<String> deleteShortUrl(String shortUrl) {
         repository.deleteByShortUrl(shortUrl);
         return ResponseEntity.ok(shortUrl + "was successfully deleted");
-    }
-
-    public ResponseEntity<UrlPojo> getInfo(String shortUrl) {
-        return repository.getUrlByBase62Key(shortUrl);
     }
 }

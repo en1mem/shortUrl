@@ -80,6 +80,7 @@ public class UrlRepository extends UrlDao {
                         .orderBy(URL.REDIRECT_COUNT.desc())
                 )
                 .where(DSL.field("row").eq(1))
+                .limit(top)
                 .fetchInto(TopUrlResponse.class);
 
 //        List<UrlPojo> result =
@@ -119,9 +120,9 @@ public class UrlRepository extends UrlDao {
                 .fetchInto(Redirect.class);
     }
 
-    public String getFullUrl(String shortUrl) {
+    public String getFullUrlById(Long id) {
         return dslContext.select(URL.FULL_URL).from(URL)
-                .where(URL.SHORT_URL.eq(shortUrl))
+                .where(URL.ID.eq(id))
                 .fetchOneInto(String.class);
     }
 }

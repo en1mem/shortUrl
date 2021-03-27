@@ -41,4 +41,7 @@ CREATE TABLE redirect (
 
 CREATE SEQUENCE seq_redirect_id OWNED BY redirect.id;
 alter table redirect alter column id set default nextval('seq_redirect_id');
+
+
+create index idx_url_short_url on url (short_url);
 ```
