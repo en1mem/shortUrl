@@ -31,12 +31,12 @@ public class StatisticController {
         return statisticService.getAllExistedShortUrls();
     }
 
-    @RequestMapping(value = "/get/top20", method = GET)
+    @RequestMapping(value = "/top20", method = GET)
     public ResponseEntity<List<TopUrlResponse>> getTop20FullUrls() {
         return statisticService.getTop20FullUrls();
     }
 
-    @RequestMapping(value = "/get/statistic", method = POST)
+    @RequestMapping(value = "/grouped", method = POST)
     public ResponseEntity<String> getGroupedStatisticByDetailedTime(@RequestBody String shortUrl) {
         return statisticService.getGroupedStatisticByDetailedTime(shortUrl);
     }
