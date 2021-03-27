@@ -1,7 +1,7 @@
 
 # Build
 
-##Shortener URLs
+## Shortener URLs
 
 ## Run
 
@@ -15,7 +15,7 @@
 ```
 
 ## JOOQ Codegen
-#### Not necessary if you use a folder @generated@
+#### Not necessary if you use a folder @generated@ in java package
 ```
 install -Dhost=localhost -Dport=5432 -Ddb=postgres -Dlogin=postgres -Dpassword=postgres jooq-codegen:generate -P codegen
 ```
