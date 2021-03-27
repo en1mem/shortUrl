@@ -10,11 +10,12 @@ install -Dhost=localhost -Dport=5432 -Ddb=postgres -Dlogin=postgres -Dpassword=p
 ## Run
 
 ```
--DdbHost=localhost 
--DdbUser=postgres 
--DdbPassword=postgres 
--DdatabaseName=postgres 
+-DdbHost=localhost
+-DdbUser=postgres
+-DdbPassword=postgres
+-DdatabaseName=postgres
 -DdbPortNumber=5432
+-DcurrentHost=localhost:8080
 ```
 
 ## sql config
