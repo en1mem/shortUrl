@@ -9,6 +9,7 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import ru.german.exception.RedirectException;
 import ru.german.model.UrlPojo;
 import ru.german.repository.RedirectRepository;
 import ru.german.repository.UrlRepository;
@@ -82,14 +83,15 @@ public class UrlService {
         return domain.startsWith("www.") ? domain.substring(4) : domain;
     }
 
+    @Transactional
     public ResponseEntity<String> deleteShortUrl(String shortUrl) {
         Long urlId = repository.getIdByShortUrl(shortUrl);
         if (urlId != null) {
             logger.info("Delete shortUrl {}", shortUrl);
             repository.deleteByShortUrl(shortUrl);
-            return ResponseEntity.ok(shortUrl + "was successfully deleted");
+            return ResponseEntity.ok(shortUrl + " was successfully deleted");
         } else {
-            return ResponseEntity.notFound().build();
+            throw new RedirectException(shortUrl);
         }
     }
 }

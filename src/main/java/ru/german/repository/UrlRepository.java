@@ -1,17 +1,15 @@
 package ru.german.repository;
 
 import generated.Sequences;
-import generated.tables.daos.RedirectDao;
 import generated.tables.daos.UrlDao;
 import generated.tables.pojos.Redirect;
-import generated.tables.pojos.Url;
 import org.jooq.DSLContext;
-import org.jooq.Field;
 import org.jooq.impl.DSL;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
+import ru.german.exception.RedirectException;
 import ru.german.model.TopUrlResponse;
 import ru.german.model.UrlPojo;
 
@@ -19,6 +17,7 @@ import java.util.List;
 
 import static generated.tables.Redirect.REDIRECT;
 import static generated.tables.Url.URL;
+import static org.jooq.impl.DSL.sum;
 
 @Repository
 public class UrlRepository extends UrlDao {
@@ -50,7 +49,7 @@ public class UrlRepository extends UrlDao {
         if (url != null) {
             return ResponseEntity.ok(url);
         } else {
-            return ResponseEntity.notFound().build();
+            throw new RedirectException(shortUrl);
         }
     }
 
@@ -63,23 +62,12 @@ public class UrlRepository extends UrlDao {
     }
 
     public ResponseEntity<List<TopUrlResponse>> getTopUrls(int top) {
-//fixme doest work right
-        Field<Integer> rowNumber = DSL.rowNumber()
-                .over().partitionBy(URL.SOURCE_NAME)
-                .orderBy(URL.REDIRECT_COUNT.desc())
-                .as("row");
-
-        List<TopUrlResponse> result = dslContext.select()
-                .from(
-                        DSL.select(
-                                rowNumber,
-                                URL.SOURCE_NAME,
-                                URL.REDIRECT_COUNT
-                        )
-                        .from(URL)
-                        .orderBy(URL.REDIRECT_COUNT.desc())
-                )
-                .where(DSL.field("row").eq(1))
+        List<TopUrlResponse> result = dslContext.select(
+                    URL.SOURCE_NAME,
+                    DSL.sum(URL.REDIRECT_COUNT).as("redirectCount"))
+                .from(URL)
+                .groupBy(URL.SOURCE_NAME)
+                .orderBy(DSL.sum(URL.REDIRECT_COUNT).desc())
                 .limit(top)
                 .fetchInto(TopUrlResponse.class);
 
