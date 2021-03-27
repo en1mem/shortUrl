@@ -59,11 +59,11 @@ public class UrlRepository extends UrlDao {
                 .from(URL)
                 .orderBy(URL.REDIRECT_COUNT)
                 .fetchInto(String.class);
-        return ResponseEntity.ok(result);
+        return result.isEmpty() ? ResponseEntity.notFound().build() : ResponseEntity.ok(result);
     }
 
     public ResponseEntity<List<TopUrlResponse>> getTopUrls(int top) {
-
+//fixme doest work right
         Field<Integer> rowNumber = DSL.rowNumber()
                 .over().partitionBy(URL.SOURCE_NAME)
                 .orderBy(URL.REDIRECT_COUNT.desc())
@@ -83,15 +83,7 @@ public class UrlRepository extends UrlDao {
                 .limit(top)
                 .fetchInto(TopUrlResponse.class);
 
-//        List<UrlPojo> result =
-//                dslContext.select(
-//                    URL.SOURCE_NAME,
-//                    URL.REDIRECT_COUNT.as("redirects"))
-//                .from(URL)
-//                .orderBy(URL.REDIRECT_COUNT)
-//                .limit(top)
-//                .fetchInto(UrlPojo.class);
-        return ResponseEntity.ok(result);
+        return result.isEmpty() ? ResponseEntity.notFound().build() : ResponseEntity.ok(result);
     }
 
     public String getShortUrl(String fullUrl) {

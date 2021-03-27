@@ -2,6 +2,8 @@ package ru.german.service;
 
 import generated.tables.pojos.Redirect;
 import generated.tables.pojos.Url;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.ResponseEntity;
@@ -29,15 +31,19 @@ public class UrlService {
     @Value("${currentHost}")
     String currentHost;
 
+    private Logger logger = LoggerFactory.getLogger(UrlService.class);
+
     @Transactional
     public ResponseEntity<String> getShortUrl(String fullUrl) {
         String shortUrl = repository.getShortUrl(fullUrl);
 
         Long urlId;
         if (shortUrl != null) {
+            logger.info("Found same full url {}, redirect it", fullUrl);
             urlId = repository.getIdByShortUrl(shortUrl);
             repository.redirectCounter(urlId);
         } else {
+            logger.info("Not found same full url {}, let's make it", fullUrl);
             urlId = repository.getNextValueForUrl();
             UrlPojo urlPojo = new UrlPojo(urlId, fullUrl, currentHost);
 
@@ -77,7 +83,13 @@ public class UrlService {
     }
 
     public ResponseEntity<String> deleteShortUrl(String shortUrl) {
-        repository.deleteByShortUrl(shortUrl);
-        return ResponseEntity.ok(shortUrl + "was successfully deleted");
+        Long urlId = repository.getIdByShortUrl(shortUrl);
+        if (urlId != null) {
+            logger.info("Delete shortUrl {}", shortUrl);
+            repository.deleteByShortUrl(shortUrl);
+            return ResponseEntity.ok(shortUrl + "was successfully deleted");
+        } else {
+            return ResponseEntity.notFound().build();
+        }
     }
 }

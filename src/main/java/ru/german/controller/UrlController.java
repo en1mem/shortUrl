@@ -10,8 +10,7 @@ import ru.german.service.UrlService;
 import static org.springframework.web.bind.annotation.RequestMethod.POST;
 
 @Controller
-@RequestMapping(value = "/manual")
-//убрал get + path потому что не работало нормально со ссылкой внутри ссылки(redirect loop)
+@RequestMapping(value = "/url")
 public class UrlController {
 
     @Autowired

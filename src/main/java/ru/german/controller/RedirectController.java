@@ -1,6 +1,7 @@
 package ru.german.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -18,6 +19,14 @@ public class RedirectController {
 
     @RequestMapping(value = "/{shortUrl}", method = GET)
     public RedirectView redirect(@PathVariable String shortUrl) {
-        return new RedirectView(redirectService.doRedirect(shortUrl));
+        String redirectLink = redirectService.doRedirect(shortUrl);
+        if (redirectLink.isEmpty()) {
+            RedirectView failedView = new RedirectView();
+            failedView.setStatusCode(HttpStatus.NOT_FOUND);
+
+            return failedView;
+        } else {
+            return new RedirectView(redirectLink);
+        }
     }
 }

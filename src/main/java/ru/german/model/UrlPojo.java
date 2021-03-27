@@ -14,10 +14,12 @@ public class UrlPojo {
     String shortUrl;
     Long redirectCount;
 
+    private final String API = "/redirect/";
+
     public UrlPojo(Long id, String fullUrl, String currentHost) {
         this.fullUrl = fullUrl;
         this.redirectCount = 1L;
 
-        this.shortUrl = currentHost + "/redirect/" + Base62.convertToBase62(id);
+        this.shortUrl = currentHost + API + Base62.convertToBase62(id);
     }
 }
