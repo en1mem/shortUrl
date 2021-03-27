@@ -1,11 +1,7 @@
 
 # Build
 
-## JOOQ Codegen
-
-```
-install -Dhost=localhost -Dport=5432 -Ddb=postgres -Dlogin=postgres -Dpassword=postgres jooq-codegen:generate -P codegen
-```
+##Shortener URLs
 
 ## Run
 
@@ -17,6 +13,13 @@ install -Dhost=localhost -Dport=5432 -Ddb=postgres -Dlogin=postgres -Dpassword=p
 -DdbPortNumber=5432
 -DcurrentHost=localhost:8080
 ```
+
+## JOOQ Codegen
+#### Not necessary if you use a folder @generated@
+```
+install -Dhost=localhost -Dport=5432 -Ddb=postgres -Dlogin=postgres -Dpassword=postgres jooq-codegen:generate -P codegen
+```
+
 
 ## sql config
 
