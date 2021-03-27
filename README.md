@@ -21,7 +21,7 @@ install -Dhost=localhost -Dport=5432 -Ddb=postgres -Dlogin=postgres -Dpassword=p
 ```
 
 
-## sql config
+## sql config (postgres)
 
 ```
 CREATE TABLE url (
