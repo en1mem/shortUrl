@@ -1,10 +1,12 @@
 package ru.german.controller;
 
+import generated.tables.pojos.Url;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import ru.german.model.GroupedStatisticPojo;
+import ru.german.model.TopUrlResponse;
 import ru.german.model.UrlPojo;
 import ru.german.service.StatisticService;
 
@@ -26,7 +28,7 @@ public class StatisticController {
     }
 
     @RequestMapping(value = "/get/top20", method = GET)
-    public ResponseEntity<List<UrlPojo>> getTop20FullUrls() {
+    public ResponseEntity<List<TopUrlResponse>> getTop20FullUrls() {
         return statisticService.getTop20FullUrls();
     }
 

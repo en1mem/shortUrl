@@ -1,6 +1,5 @@
 package ru.german.service;
 
-import generated.tables.daos.RedirectDao;
 import generated.tables.pojos.Redirect;
 import generated.tables.pojos.Url;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -42,7 +41,7 @@ public class RewriteService {
             shortUrl = result.getShortUrl();
             repository.insert(result);
         }
-//todo maybe move redirect
+
         Redirect redirect = new Redirect();
         redirect.setUrlId(urlId);
         redirectRepository.insert(redirect);
@@ -55,6 +54,7 @@ public class RewriteService {
         result.setId(urlPojo.getId());
         result.setFullUrl(urlPojo.getFullUrl());
         result.setShortUrl(urlPojo.getShortUrl());
+        result.setRedirectCount(urlPojo.getRedirectCount());
 
         try {
             String hostName = generateHostName(urlPojo.getFullUrl());
@@ -72,9 +72,9 @@ public class RewriteService {
         return domain.startsWith("www.") ? domain.substring(4) : domain;
     }
 
-    public ResponseEntity<String> deleteShortUrl(String fullUrl) {
-        repository.delete(fullUrl);
-        return ResponseEntity.ok(fullUrl + "was successfully deleted");
+    public ResponseEntity<String> deleteShortUrl(String shortUrl) {
+        repository.deleteByShortUrl(shortUrl);
+        return ResponseEntity.ok(shortUrl + "was successfully deleted");
     }
 
     public ResponseEntity<UrlPojo> getInfo(String shortUrl) {

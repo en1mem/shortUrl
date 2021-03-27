@@ -10,7 +10,9 @@ public class RedirectService {
     @Autowired
     UrlRepository repository;
 
-    public String doRedirect(String fullUrl) {
-        return repository.getShortUrl(fullUrl);
+    public String doRedirect(String shortUrl) {
+        Long urlId = repository.getIdByShortUrl(shortUrl);
+        repository.redirectCounter(urlId);
+        return repository.getFullUrl(shortUrl);
     }
 }

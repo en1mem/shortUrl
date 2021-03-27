@@ -32,6 +32,7 @@ public class DbConfiguration {
     @Value("${dbPortNumber}")
     private String portNumber;
 
+    @Bean
     public DataSourceConnectionProvider connectionProvider() {
         return new DataSourceConnectionProvider(new TransactionAwareDataSourceProxy(dataSource()));
     }

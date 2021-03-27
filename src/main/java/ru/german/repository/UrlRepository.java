@@ -4,12 +4,15 @@ import generated.Sequences;
 import generated.tables.daos.RedirectDao;
 import generated.tables.daos.UrlDao;
 import generated.tables.pojos.Redirect;
+import generated.tables.pojos.Url;
 import org.jooq.DSLContext;
 import org.jooq.Field;
 import org.jooq.impl.DSL;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Repository;
+import org.springframework.transaction.annotation.Transactional;
+import ru.german.model.TopUrlResponse;
 import ru.german.model.UrlPojo;
 
 import java.util.List;
@@ -23,13 +26,20 @@ public class UrlRepository extends UrlDao {
     @Autowired
     DSLContext dslContext;
 
+    public UrlRepository(DSLContext dslContext) {
+        this.dslContext = dslContext;
+        super.setConfiguration(this.dslContext.configuration());
+    }
+
+    @Transactional
     public Long getNextValueForUrl() {
         return dslContext.nextval(Sequences.SEQ_URL_ID);
     }
 
-    public void delete(String fullUrl) {
+    @Transactional
+    public void deleteByShortUrl(String shortUrl) {
         dslContext.delete(URL)
-                .where(URL.FULL_URL.eq(fullUrl))
+                .where(URL.SHORT_URL.eq(shortUrl))
                 .execute();
     }
 
@@ -52,34 +62,34 @@ public class UrlRepository extends UrlDao {
         return ResponseEntity.ok(result);
     }
 
-    public ResponseEntity<List<UrlPojo>> getTopUrls(int top) {
+    public ResponseEntity<List<TopUrlResponse>> getTopUrls(int top) {
 
-//        Field<Integer> rowNumber = DSL.rowNumber()
-//                .over().partitionBy(URL.SOURCE_NAME)
-//                .orderBy(URL.REDIRECT_COUNT.desc())
-//                .as("row");
-//
-//        List<UrlPojo> result = dslContext.select()
-//                .from(
-//                        DSL.select(
-//                                rowNumber,
-//                                URL.SOURCE_NAME,
-//                                URL.REDIRECT_COUNT.as("redirects")
-//                        )
-//                        .from(URL)
-//                        .orderBy(URL.REDIRECT_COUNT.desc())
-//                )
-//                .where(DSL.field("row").eq(1))
+        Field<Integer> rowNumber = DSL.rowNumber()
+                .over().partitionBy(URL.SOURCE_NAME)
+                .orderBy(URL.REDIRECT_COUNT.desc())
+                .as("row");
+
+        List<TopUrlResponse> result = dslContext.select()
+                .from(
+                        DSL.select(
+                                rowNumber,
+                                URL.SOURCE_NAME,
+                                URL.REDIRECT_COUNT
+                        )
+                        .from(URL)
+                        .orderBy(URL.REDIRECT_COUNT.desc())
+                )
+                .where(DSL.field("row").eq(1))
+                .fetchInto(TopUrlResponse.class);
+
+//        List<UrlPojo> result =
+//                dslContext.select(
+//                    URL.SOURCE_NAME,
+//                    URL.REDIRECT_COUNT.as("redirects"))
+//                .from(URL)
+//                .orderBy(URL.REDIRECT_COUNT)
+//                .limit(top)
 //                .fetchInto(UrlPojo.class);
-
-        List<UrlPojo> result =
-                dslContext.select(
-                    URL.SOURCE_NAME,
-                    URL.REDIRECT_COUNT.as("redirects"))
-                .from(URL)
-                .orderBy(URL.REDIRECT_COUNT)
-                .limit(top)
-                .fetchInto(UrlPojo.class);
         return ResponseEntity.ok(result);
     }
 
@@ -107,5 +117,11 @@ public class UrlRepository extends UrlDao {
         return dslContext.selectFrom(REDIRECT)
                 .where(REDIRECT.URL_ID.eq(urlId))
                 .fetchInto(Redirect.class);
+    }
+
+    public String getFullUrl(String shortUrl) {
+        return dslContext.select(URL.FULL_URL).from(URL)
+                .where(URL.SHORT_URL.eq(shortUrl))
+                .fetchOneInto(String.class);
     }
 }

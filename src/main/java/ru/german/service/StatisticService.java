@@ -1,10 +1,12 @@
 package ru.german.service;
 
 import generated.tables.pojos.Redirect;
+import generated.tables.pojos.Url;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import ru.german.model.GroupedStatisticPojo;
+import ru.german.model.TopUrlResponse;
 import ru.german.model.UrlPojo;
 import ru.german.repository.UrlRepository;
 
@@ -20,8 +22,7 @@ public class StatisticService {
         return repository.getAllExistedShortUrls();
     }
 
-    public ResponseEntity<List<UrlPojo>> getTop20FullUrls() {
-        //todo fix
+    public ResponseEntity<List<TopUrlResponse>> getTop20FullUrls() {
         return repository.getTopUrls(20);
     }
 
