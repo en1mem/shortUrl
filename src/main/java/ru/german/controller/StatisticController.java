@@ -31,7 +31,7 @@ public class StatisticController {
         return statisticService.getAllExistedShortUrls();
     }
 
-    @RequestMapping(value = "/top20", method = GET)
+    @RequestMapping(value = "/top20", method = POST)
     public ResponseEntity<List<TopUrlResponse>> getTop20FullUrls() {
         return statisticService.getTop20FullUrls();
     }
