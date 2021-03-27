@@ -1,7 +1,7 @@
 
 # Build
 
-## Shortener URLs
+## Shortener URLs (tested with Postman)
 
 ## Run (spring boot conf)
 
