@@ -1,9 +1,9 @@
 
 # Build
 
-## Shortener URLs
+## Shortener URLs (tested with Postman)
 
-## Run
+## Run (spring boot conf)
 
 ```
 -DdbHost=localhost
@@ -14,14 +14,14 @@
 -DcurrentHost=localhost:8080
 ```
 
-## JOOQ Codegen
+## JOOQ Codegen (maven conf)
 #### Not necessary if you use a folder @generated@ in java package
 ```
 install -Dhost=localhost -Dport=5432 -Ddb=postgres -Dlogin=postgres -Dpassword=postgres jooq-codegen:generate -P codegen
 ```
 
 
-## sql config (postgres)
+## sql config (postgres) (done with pgAdmin and DataGrip)
 
 ```
 CREATE TABLE url (
