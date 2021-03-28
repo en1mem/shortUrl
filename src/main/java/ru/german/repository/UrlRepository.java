@@ -3,6 +3,7 @@ package ru.german.repository;
 import generated.Sequences;
 import generated.tables.daos.UrlDao;
 import generated.tables.pojos.Redirect;
+import generated.tables.pojos.Url;
 import org.jooq.DSLContext;
 import org.jooq.impl.DSL;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -38,12 +39,12 @@ public class UrlRepository extends UrlDao {
                 .execute();
     }
 
-    public ResponseEntity<UrlPojo> getUrlByBase62Key(String shortUrl) {
-        UrlPojo url = dslContext.selectFrom(URL)
+    public Url getUrlByBase62Key(String shortUrl) {
+        Url url = dslContext.selectFrom(URL)
                 .where(URL.SHORT_URL.eq(shortUrl))
-                .fetchAnyInto(UrlPojo.class);
+                .fetchAnyInto(Url.class);
         if (url != null) {
-            return ResponseEntity.ok(url);
+            return url;
         } else {
             throw new RedirectException(shortUrl);
         }
@@ -63,7 +64,7 @@ public class UrlRepository extends UrlDao {
                     DSL.sum(URL.REDIRECT_COUNT).as("redirectCount"))
                 .from(URL)
                 .groupBy(URL.SOURCE_NAME)
-                .orderBy(DSL.sum(URL.REDIRECT_COUNT).desc())
+                .orderBy(DSL.sum(URL.REDIRECT_COUNT).desc().nullsLast())
                 .limit(top)
                 .fetchInto(TopUrlResponse.class);
 

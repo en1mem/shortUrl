@@ -4,6 +4,7 @@ import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.SerializationFeature;
 import generated.tables.pojos.Redirect;
+import generated.tables.pojos.Url;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -28,17 +29,8 @@ public class StatisticService {
 
     private Logger logger = LoggerFactory.getLogger(StatisticService.class);
 
-    public ResponseEntity<String> getInfo(String shortUrl) {
-        objectMapper.enable(SerializationFeature.INDENT_OUTPUT);
-
-        try {
-            String result = objectMapper.writeValueAsString(repository.getUrlByBase62Key(shortUrl));
-            return ResponseEntity.ok(result);
-        } catch (JsonProcessingException jsonProcessingException) {
-            jsonProcessingException.printStackTrace();
-        }
-
-        return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
+    public ResponseEntity<Url> getInfo(String shortUrl) {
+        return ResponseEntity.ok(repository.getUrlByBase62Key(shortUrl));
     }
 
     public ResponseEntity<List<String>> getAllExistedShortUrls() {

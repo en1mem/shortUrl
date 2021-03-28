@@ -1,17 +1,16 @@
 package ru.german.controller;
 
+import generated.tables.pojos.Url;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import ru.german.model.TopUrlResponse;
-import ru.german.model.UrlPojo;
 import ru.german.service.StatisticService;
 
 import java.util.List;
 
-import static org.springframework.web.bind.annotation.RequestMethod.GET;
 import static org.springframework.web.bind.annotation.RequestMethod.POST;
 
 @Controller
@@ -22,7 +21,7 @@ public class StatisticController {
     StatisticService statisticService;
 
     @RequestMapping(value = "/get/info", method = POST)
-    public ResponseEntity<String> getInfo(@RequestBody String shortUrl) {
+    public ResponseEntity<Url> getInfo(@RequestBody String shortUrl) {
         return statisticService.getInfo(shortUrl);
     }
 
