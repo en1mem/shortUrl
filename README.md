@@ -29,7 +29,7 @@ CREATE TABLE url (
               full_url text NOT NULL,
               short_url text NOT NULL,
               source_name text NOT NULL, 
-              redirect_count bigint DEFAULT 1,
+              redirect_count bigint,
 	      created_date_time timestamp NOT NULL DEFAULT now()
 );
 

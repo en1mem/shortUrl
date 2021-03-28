@@ -40,9 +40,7 @@ public class UrlService {
 
         Long urlId;
         if (shortUrl != null) {
-            logger.info("Found same full url {}, redirect it", fullUrl);
-            urlId = repository.getIdByShortUrl(shortUrl);
-            repository.redirectCounter(urlId);
+            logger.info("Found same url - short Url: {}, return it", shortUrl);
         } else {
             logger.info("Not found same full url {}, let's make it", fullUrl);
             urlId = repository.getNextValueForUrl();
@@ -52,10 +50,6 @@ public class UrlService {
             shortUrl = result.getShortUrl();
             repository.insert(result);
         }
-
-        Redirect redirect = new Redirect();
-        redirect.setUrlId(urlId);
-        redirectRepository.insert(redirect);
 
         return ResponseEntity.ok(shortUrl);
     }

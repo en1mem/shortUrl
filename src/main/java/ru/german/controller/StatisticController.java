@@ -22,7 +22,7 @@ public class StatisticController {
     StatisticService statisticService;
 
     @RequestMapping(value = "/get/info", method = POST)
-    public ResponseEntity<UrlPojo> getInfo(@RequestBody String shortUrl) {
+    public ResponseEntity<String> getInfo(@RequestBody String shortUrl) {
         return statisticService.getInfo(shortUrl);
     }
 

@@ -28,8 +28,17 @@ public class StatisticService {
 
     private Logger logger = LoggerFactory.getLogger(StatisticService.class);
 
-    public ResponseEntity<UrlPojo> getInfo(String shortUrl) {
-        return repository.getUrlByBase62Key(shortUrl);
+    public ResponseEntity<String> getInfo(String shortUrl) {
+        objectMapper.enable(SerializationFeature.INDENT_OUTPUT);
+
+        try {
+            String result = objectMapper.writeValueAsString(repository.getUrlByBase62Key(shortUrl));
+            return ResponseEntity.ok(result);
+        } catch (JsonProcessingException jsonProcessingException) {
+            jsonProcessingException.printStackTrace();
+        }
+
+        return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
     }
 
     public ResponseEntity<List<String>> getAllExistedShortUrls() {
