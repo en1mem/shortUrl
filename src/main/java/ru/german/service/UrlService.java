@@ -1,6 +1,5 @@
 package ru.german.service;
 
-import generated.tables.pojos.Redirect;
 import generated.tables.pojos.Url;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -8,7 +7,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
 import ru.german.exception.RedirectException;
 import ru.german.model.UrlPojo;
 import ru.german.repository.RedirectRepository;
@@ -34,7 +32,6 @@ public class UrlService {
 
     private Logger logger = LoggerFactory.getLogger(UrlService.class);
 
-    @Transactional
     public ResponseEntity<String> getShortUrl(String fullUrl) {
         String shortUrl = repository.getShortUrl(fullUrl);
 
@@ -77,7 +74,6 @@ public class UrlService {
         return domain.startsWith("www.") ? domain.substring(4) : domain;
     }
 
-    @Transactional
     public ResponseEntity<String> deleteShortUrl(String shortUrl) {
         Long urlId = repository.getIdByShortUrl(shortUrl);
         if (urlId != null) {

@@ -8,7 +8,6 @@ import org.jooq.impl.DSL;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Repository;
-import org.springframework.transaction.annotation.Transactional;
 import ru.german.exception.RedirectException;
 import ru.german.model.TopUrlResponse;
 import ru.german.model.UrlPojo;
@@ -17,7 +16,6 @@ import java.util.List;
 
 import static generated.tables.Redirect.REDIRECT;
 import static generated.tables.Url.URL;
-import static org.jooq.impl.DSL.sum;
 
 @Repository
 public class UrlRepository extends UrlDao {
@@ -30,12 +28,10 @@ public class UrlRepository extends UrlDao {
         super.setConfiguration(this.dslContext.configuration());
     }
 
-    @Transactional
     public Long getNextValueForUrl() {
         return dslContext.nextval(Sequences.SEQ_URL_ID);
     }
 
-    @Transactional
     public void deleteByShortUrl(String shortUrl) {
         dslContext.delete(URL)
                 .where(URL.SHORT_URL.eq(shortUrl))
